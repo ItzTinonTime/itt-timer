@@ -136,30 +136,55 @@ function Timer:OpenCreationMenu()
     self.TimerButton:DockMargin(6, 0, 6, 6)
     self.TimerButton:SetText("")
     self.TimerButton.Paint = function(me, w, h)
-        local c = me:IsHovered() and Color(0, 255, 0) or COL_BTN_GO
-        draw.RoundedBox(6, 0, 0, w, h, c)
-        draw.SimpleText(Timer:GetLangString("submit") or "Submit", "Timer.Button", w/2, h/2, COL_WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        local btnColor = Timer.TimerButtonColor or me:IsHovered() and Color(0, 255, 0) or COL_BTN_GO
+        local btnText = Timer.TimerButtonText or (Timer:GetLangString("submit") or "Submit")
+        draw.RoundedBox(6, 0, 0, w, h, btnColor)
+        draw.SimpleText(btnText, "Timer.Button", w/2, h/2, COL_WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
     self.TimerButton.DoClick = function()
         surface.PlaySound("buttons/button14.wav")
 
+        -- If timer is active -> cancel it
+        if Timer.ClientTimerActive then
+            net.Start("Timer.timer_cancel")
+            net.SendToServer()
+            return
+        end
+
+        -- Otherwise: start new timer with the given duration
         local duration = Timer:GetDurationSeconds(
             self.HourWang:GetValue(), 
             self.MinWang:GetValue(), 
             self.SecWang:GetValue()
         )
+
         if duration <= 0 then 
             DoNotify(Timer:GetLangString("invalid_duration") or "Please set a duration greater than 0.", true, 5)
             return
         end
 
-        -- TODO: Change this line and start timer
-        print("Timer set for " .. duration .. " seconds.")
-
-        self:CloseCreationMenu()
+        net.Start("Timer.timer_set")
+            net.WriteUInt(duration, 32)
+        net.SendToServer()
     end
 
     self.CreationFrame:MakePopup()
+    self:UpdateCreationMenuState()
+end
+
+function Timer:UpdateCreationMenuState()
+    if not IsValid(self.CreationFrame) then return end
+
+    local active = Timer.ClientTimerActive
+    
+    -- Disable fields
+    self.HourWang:SetDisabled(not active)
+    self.MinWang:SetDisabled(not active)
+    self.SecWang:SetDisabled(not active)
+
+    -- Change button
+    self.TimerButtonText = active and (Timer:GetLangString("cancel") or "Cancel") or (Timer:GetLangString("submit") or "Submit")
+    // TODO: Change button color to red when active + hovered
 end
 
 -- Closes the timer creation menu when existing.

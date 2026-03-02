@@ -17,8 +17,8 @@ net.Receive("Timer.timer_state", function()
     Timer.ClientTimerActive = active
     Timer.ClientTimerEnd = active and (curTime() + remaining) or 0
 
-    if IsValid(Timer.CreationFrame) and isfunction(Timer.CreationFrame.UpdateTimer) then
-        Timer.CreationFrame:UpdateTimer()
+    if IsValid(Timer.CreationFrame) and isfunction(Timer.UpdateCreationMenuState) then
+        Timer:UpdateCreationMenuState()
     end
 end)
 
