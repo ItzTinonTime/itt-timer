@@ -7,6 +7,8 @@
 -------------------------------------
 -------------------------------------
 
+if not Timer then return end
+
 -- Convert the given hours, minutes and seconds to a total amount of seconds.
 -- @param hours The hours to convert
 -- @param minutes The minutes to convert

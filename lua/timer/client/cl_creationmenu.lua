@@ -7,6 +7,8 @@
 -------------------------------------
 -------------------------------------
 
+if not Timer then return end
+
 local COL_BG        = Color(0, 0, 0, 230)
 local COL_OUTLINE   = Color(255, 255, 255, 255)
 local COL_WHITE     = Color(255, 255, 255)

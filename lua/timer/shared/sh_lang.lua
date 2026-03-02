@@ -7,6 +7,8 @@
 -------------------------------------
 -------------------------------------
 
+if not Timer then return end
+
 --- Get a language phrase. Which is set in the lang folder.
 -- @param str string The key for the language string
 -- @param ... any Optional parameters to format the string

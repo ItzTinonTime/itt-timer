@@ -7,6 +7,8 @@
 -------------------------------------
 -------------------------------------
 
+if not Timer then return end
+
 util.AddNetworkString("Timer.open_menu")
 hook.Add("PlayerSay", "Timer.HandleChatCommands", function(ply, text)
     text = string.Trim(string.lower(text))
