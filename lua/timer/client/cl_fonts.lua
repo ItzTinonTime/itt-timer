@@ -20,3 +20,17 @@ surface.CreateFont( "Timer.CloseButton", {
 	size = 32,
 	weight = 700,
 } )
+
+surface.CreateFont( "Timer.Button", {
+	font = "Arial",
+	extended = false,
+	size = 24,
+	weight = 700,
+} )
+
+surface.CreateFont( "Timer.Label", {
+	font = "Arial",
+	extended = false,
+	size = 20,
+	weight = 600,
+} )
