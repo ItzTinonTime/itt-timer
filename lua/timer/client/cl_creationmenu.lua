@@ -51,6 +51,11 @@ local function MakeLabel(parent, txt)
     return l
 end
 
+local function DoNotify(txt, isError, length)
+    notify.AddLegacy(txt, isError and NOTIFY_ERROR or NOTIFY_GENERIC, length)
+    surface.PlaySound("buttons/button15.wav")
+    Msg(txt .. "\n")
+end
 
 -- Opens the timer creation menu
 function Timer:OpenCreationMenu()
@@ -137,7 +142,20 @@ function Timer:OpenCreationMenu()
     end
     self.TimerButton.DoClick = function()
         surface.PlaySound("buttons/button14.wav")
-        // TODO: DO STUFF HERE
+
+        local duration = Timer:GetDurationSeconds(
+            self.HourWang:GetValue(), 
+            self.MinWang:GetValue(), 
+            self.SecWang:GetValue()
+        )
+        if duration <= 0 then 
+            DoNotify(Timer:GetLangString("invalid_duration") or "Please set a duration greater than 0.", true, 5)
+            return
+        end
+
+        -- TODO: Change this line and start timer
+        print("Timer set for " .. duration .. " seconds.")
+
         self:CloseCreationMenu()
     end
 

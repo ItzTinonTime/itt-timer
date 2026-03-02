@@ -17,4 +17,5 @@ Timer.Language["en"] = {
     ["hour"] = "Hours",
     ["minute"] = "Minutes",
     ["second"] = "Seconds",
+    ["invalid_duration"] = "Please set a duration greater than 0.",
 }
