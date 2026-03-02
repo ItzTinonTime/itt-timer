@@ -207,3 +207,8 @@ end
 concommand.Add("timer_open", function()
     Timer:OpenCreationMenu()
 end)
+
+-- Open menu via net Message
+net.Receive("Timer.open_menu", function()
+    Timer:OpenCreationMenu()
+end)

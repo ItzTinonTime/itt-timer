@@ -30,7 +30,7 @@ end
 
 -- Cancels the active timer for the player if there is one and sends an update to the client.
 -- @param ply The player whose timer should be cancelled
-local function CancelTimer(ply)
+function Timer:CancelTimer(ply)
     local data = Timer.ActiveTimers[ply]
     if data then
         timer.Remove(data.id)
@@ -46,7 +46,7 @@ net.Receive("Timer.timer_set", function(len, ply)
     duration = math.Clamp(duration, 1, 23 * 3600 + 59 * 60 + 59) -- max 23:59:59
 
     -- if one is active: cancel it first
-    CancelTimer(ply)
+    Timer:CancelTimer(ply)
 
     local id = "Timer_" .. ply:SteamID64()
     local endTime = CurTime() + duration
@@ -82,7 +82,7 @@ end)
 
 -- This allows clients to cancel their timer early if they want to.
 net.Receive("Timer.timer_cancel", function(len, ply)
-    CancelTimer(ply)
+    Timer:CancelTimer(ply)
 end)
 
 -- Cleanup timers when a player disconnects to prevent orphan timers and potential issues.
