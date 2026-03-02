@@ -44,6 +44,12 @@ end
 -- Starts a timer for the player with the given duration in seconds. 
 -- If a timer is already active, it will be replaced.
 net.Receive("Timer.timer_set", function(len, ply)
+    -- Spam protection: Only allow starting a timer every 0.5 seconds
+    if ply._NextTimerCreate and ply._NextTimerCreate > CurTime() then
+        return
+    end
+    ply._NextTimerCreate = CurTime() + 0.5
+
     local duration = net.ReadUInt(32)
     duration = math.Clamp(duration, 1, 23 * 3600 + 59 * 60 + 59) -- max 23:59:59
 
