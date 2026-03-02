@@ -7,6 +7,8 @@
 -------------------------------------
 -------------------------------------
 
+if not Timer then return end
+
 Timer.ClientTimerActive = Timer.ClientTimerActive or false
 Timer.ClientTimerEnd = Timer.ClientTimerEnd or 0
 

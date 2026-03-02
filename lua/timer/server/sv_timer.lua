@@ -7,6 +7,8 @@
 -------------------------------------
 -------------------------------------
 
+if not Timer then return end
+
 resource.AddFile("sound/itt-timer/timer_alarm.wav")
 
 util.AddNetworkString("Timer.timer_set")
