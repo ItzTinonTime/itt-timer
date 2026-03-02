@@ -52,7 +52,7 @@ local function MakeLabel(parent, txt)
 end
 
 local function DoNotify(txt, isError, length)
-    notify.AddLegacy(txt, isError and NOTIFY_ERROR or NOTIFY_GENERIC, length)
+    notification.AddLegacy(txt, isError and NOTIFY_ERROR or NOTIFY_GENERIC, length)
     surface.PlaySound("buttons/button15.wav")
     Msg(txt .. "\n")
 end

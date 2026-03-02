@@ -7,6 +7,8 @@
 -------------------------------------
 -------------------------------------
 
+resource.AddFile("sound/itt-timer/timer_alarm.wav")
+
 util.AddNetworkString("Timer.timer_set")
 util.AddNetworkString("Timer.timer_cancel")
 util.AddNetworkString("Timer.timer_state")
@@ -53,6 +55,24 @@ net.Receive("Timer.timer_set", function(len, ply)
 
     timer.Create(id, duration, 1, function() 
         if not IsValid(ply) then return end
+
+        -- Play ringing sound when the timer finishes (bound to player)
+        if Timer.Config.EnableRingingSound then
+            ply:EmitSound(
+                Timer.Config.RingingSound,
+                Timer.Config.RingingSoundLevel or 75,
+                Timer.Config.RingingSoundPitch or 100,
+                Timer.Config.RingingSoundVolume or 1
+            )
+
+            -- Stop loop sound after X seconds
+            timer.Simple(Timer.Config.RingingSoundTimeUntilStop, function()
+                if IsValid(ply) then
+                    ply:StopSound(Timer.Config.RingingSound)
+                end
+            end)
+        end
+
         Timer.ActiveTimers[ply] = nil
         SendState(ply, false, 0)
     end)
