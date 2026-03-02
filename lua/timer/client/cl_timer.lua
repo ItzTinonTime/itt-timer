@@ -34,5 +34,33 @@ hook.Add("HUDPaint", "Timer.DrawTimer", function()
 
     local txt = Timer:HMSString(remaining)
 
-    draw.SimpleText(txt, "Timer.Title", ScrW() * 0.01, ScrH() * 0.05, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    -- Positioning
+    local x = math.floor(ScrW() * 0.01)
+    local y = math.floor(ScrH() * 0.05)
+
+    -- Styl + padding
+    local padX, padY = 10, 6
+    local outline = 1
+
+    surface.SetFont("Timer.Title")
+    local tw, th = surface.GetTextSize(txt)
+
+    local w, h = tw + padX * 2, th + padY * 2
+
+    x = math.Clamp(x, outline, ScrW() - w - outline)
+    y = math.Clamp(y, outline, ScrH() - h - outline)
+
+    draw.RoundedBox(0, x, y, w, h, Color(0, 0, 0, 230))
+    surface.SetDrawColor(255, 255, 255, 255)
+    surface.DrawOutlinedRect(x, y, w, h, outline)
+
+    draw.SimpleText(
+        txt,
+        "Timer.Title",
+        x + padX,
+        y + h / 2,
+        color_white,
+        TEXT_ALIGN_LEFT,
+        TEXT_ALIGN_CENTER
+    )
 end)
