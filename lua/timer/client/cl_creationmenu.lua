@@ -178,9 +178,9 @@ function Timer:UpdateCreationMenuState()
     local active = Timer.ClientTimerActive
     
     -- Disable fields
-    self.HourWang:SetDisabled(not active)
-    self.MinWang:SetDisabled(not active)
-    self.SecWang:SetDisabled(not active)
+    self.HourWang:SetEnabled(not active)
+    self.MinWang:SetEnabled(not active)
+    self.SecWang:SetEnabled(not active)
 
     -- Change button
     self.TimerButtonText = active and (Timer:GetLangString("cancel") or "Cancel") or (Timer:GetLangString("submit") or "Submit")

@@ -15,7 +15,7 @@ net.Receive("Timer.timer_state", function()
     local remaining = net.ReadUInt(32)
 
     Timer.ClientTimerActive = active
-    Timer.ClientTimerEnd = active and (curTime() + remaining) or 0
+    Timer.ClientTimerEnd = active and (CurTime() + remaining) or 0
 
     if IsValid(Timer.CreationFrame) and isfunction(Timer.UpdateCreationMenuState) then
         Timer:UpdateCreationMenuState()
@@ -25,7 +25,7 @@ end)
 hook.Add("HUDPaint", "Timer.DrawTimer", function()
     if not Timer.ClientTimerActive then return end
 
-    local remaining = math.max(0, math.ceil(Timer.ClientTimerEnd - curTime()))
+    local remaining = math.max(0, math.ceil(Timer.ClientTimerEnd - CurTime()))
     if remaining <= 0 then
         Timer.ClientTimerActive = false
         Timer.ClientTimerEnd = 0

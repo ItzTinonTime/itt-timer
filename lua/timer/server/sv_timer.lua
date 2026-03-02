@@ -47,7 +47,7 @@ net.Receive("Timer.timer_set", function(len, ply)
     CancelTimer(ply)
 
     local id = "Timer_" .. ply:SteamID64()
-    local endTime = curTime() + duration
+    local endTime = CurTime() + duration
 
     Timer.ActiveTimers[ply] = {endTime = endTime, id = id}
 

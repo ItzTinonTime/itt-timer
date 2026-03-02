@@ -14,6 +14,7 @@
 Timer.Language["en"] = {
     ["frame_title"] = "Timer",
     ["submit"] = "Submit",
+    ["cancel"] = "Cancel",
     ["hour"] = "Hours",
     ["minute"] = "Minutes",
     ["second"] = "Seconds",
