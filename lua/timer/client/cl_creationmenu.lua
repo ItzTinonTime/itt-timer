@@ -61,7 +61,7 @@ end
 function Timer:OpenCreationMenu()
     self:CloseCreationMenu()
 
-    local width, height = ScrW() * 0.3, ScrH() * 0.3
+    local width, height = ScrW() * 0.25, ScrH() * 0.13
 
     -- General frame
     self.CreationFrame = vgui.Create("DFrame")
@@ -136,9 +136,19 @@ function Timer:OpenCreationMenu()
     self.TimerButton:DockMargin(6, 0, 6, 6)
     self.TimerButton:SetText("")
     self.TimerButton.Paint = function(me, w, h)
-        local btnColor = Timer.TimerButtonColor or me:IsHovered() and Color(0, 255, 0) or COL_BTN_GO
+        local hovered = me:IsHovered()
+        local col
+        if Timer.ClientTimerActive then
+            -- Cancel state
+            col = hovered and Color(255, 80, 80) or Color(200, 40, 40)
+        else
+            -- Submit state
+            col = hovered and Color(0, 255, 0) or COL_BTN_GO
+        end
+
         local btnText = Timer.TimerButtonText or (Timer:GetLangString("submit") or "Submit")
-        draw.RoundedBox(6, 0, 0, w, h, btnColor)
+        
+        draw.RoundedBox(6, 0, 0, w, h, col)
         draw.SimpleText(btnText, "Timer.Button", w/2, h/2, COL_WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
     self.TimerButton.DoClick = function()
@@ -184,7 +194,6 @@ function Timer:UpdateCreationMenuState()
 
     -- Change button
     self.TimerButtonText = active and (Timer:GetLangString("cancel") or "Cancel") or (Timer:GetLangString("submit") or "Submit")
-    // TODO: Change button color to red when active + hovered
 end
 
 -- Closes the timer creation menu when existing.

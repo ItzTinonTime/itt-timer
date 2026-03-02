@@ -10,6 +10,7 @@
 Timer.ClientTimerActive = Timer.ClientTimerActive or false
 Timer.ClientTimerEnd = Timer.ClientTimerEnd or 0
 
+-- Receives the timer state from the server and updates the client's timer accordingly.
 net.Receive("Timer.timer_state", function()
     local active = net.ReadBool()
     local remaining = net.ReadUInt(32)
@@ -22,6 +23,7 @@ net.Receive("Timer.timer_state", function()
     end
 end)
 
+-- Draws the active timer on the player's screen if there is one.
 hook.Add("HUDPaint", "Timer.DrawTimer", function()
     if not Timer.ClientTimerActive then return end
 
