@@ -4,7 +4,6 @@ Little Timer System for Garry's Mod
 ## Table of contents
 - [Installation + Requirements](#installation--requirements)
 - [License](#license)
-- [Credits](#credits)
 
 ## Installation + Requirements
 Just Drag and Drop the folder into `garrysmod/addons/`.
